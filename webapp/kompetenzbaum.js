@@ -50,7 +50,10 @@ function drawEdges(konzepte) {
 function renderTree(konzepte) {
   letzteKonzepte = konzepte;
   const byId = Object.fromEntries(konzepte.map((c) => [c.id, c]));
-  const blockOrder = ["Grundlagen", "U1", "U2", "U3", "U4", "U5"];
+  const andereBloecke = [...new Set(konzepte.map((c) => c.ue))].filter((ue) => ue !== "Grundlagen");
+  const blockOrder = konzepte.some((c) => c.ue === "Grundlagen")
+    ? ["Grundlagen", ...andereBloecke]
+    : andereBloecke;
   const rowsEl = document.getElementById("tree-rows");
   rowsEl.innerHTML = "";
 

@@ -15,6 +15,12 @@ function mdWithMath(text) {
   );
 }
 
+let KATEX_MACROS = {};
+fetch("/config.json")
+  .then((r) => r.json())
+  .then((cfg) => { KATEX_MACROS = cfg.katex_macros || {}; })
+  .catch(() => {});
+
 function renderMath(el, versucheUebrig = 20) {
   if (window.renderMathInElement) {
     renderMathInElement(el, {
@@ -23,12 +29,7 @@ function renderMath(el, versucheUebrig = 20) {
         { left: "$", right: "$", display: false },
       ],
       throwOnError: false,
-      macros: {
-        "\\ten": "\\boldsymbol{#1}",
-        "\\tr": "\\operatorname{tr}",
-        "\\grad": "\\operatorname{Grad}",
-        "\\dv": "\\operatorname{div}",
-      },
+      macros: KATEX_MACROS,
     });
   } else if (versucheUebrig > 0) {
     setTimeout(() => renderMath(el, versucheUebrig - 1), 50);
