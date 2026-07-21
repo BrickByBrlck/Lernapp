@@ -12,6 +12,12 @@ const $newSessionBtn = document.getElementById("new-session-btn");
 let busy = false;
 let letzterStand = null; // letzter /api/status-Fortschritt -- fuer die XP-Aufschluesselung beim Klick auf einen Meter
 
+let KATEX_MACROS = {};
+fetch("/config.json")
+  .then((r) => r.json())
+  .then((cfg) => { KATEX_MACROS = cfg.katex_macros || {}; })
+  .catch(() => {});
+
 // marked.parse() escaped Backslashes wie ganz normalen Markdown-Text -- "\\"
 // (der LaTeX-Zeilenumbruch in einer Matrix) wird dabei zu einem einzelnen "\",
 // noch bevor KaTeX den Text je sieht. Ergebnis: jede mehrzeilige Matrix faellt
@@ -95,14 +101,7 @@ function renderMath(el, versucheUebrig = 20) {
         { left: "$", right: "$", display: false },
       ],
       throwOnError: false,
-      // Dieselben Tensor-Makros wie in .vscode/settings.json fuer die
-      // VS-Code-Vorschau -- KaTeX im Browser kennt sie sonst nicht.
-      macros: {
-        "\\ten": "\\boldsymbol{#1}",
-        "\\tr": "\\operatorname{tr}",
-        "\\grad": "\\operatorname{Grad}",
-        "\\dv": "\\operatorname{div}",
-      },
+      macros: KATEX_MACROS,
     });
   } else if (versucheUebrig > 0) {
     setTimeout(() => renderMath(el, versucheUebrig - 1), 50);
@@ -272,9 +271,10 @@ function renderXpDetail(kind, f) {
 
   if (kind === "season") {
     const skript = f.konzepte.filter((c) => c.typ !== "grundlage");
+    const blockOrder = [...new Set(skript.map((c) => c.ue))];
     let html = `<div class="detail-title">Season 1 — XP-Zusammensetzung</div>`;
     html += `<div class="detail-meta">${f.erreicht_xp.toFixed(1)} / ${f.gesamt_xp} XP</div>`;
-    html += xpBlockGroup(skript, ["U1", "U2", "U3", "U4", "U5"], { type: "xpkind", value: "season" });
+    html += xpBlockGroup(skript, blockOrder, { type: "xpkind", value: "season" });
     return html;
   }
 

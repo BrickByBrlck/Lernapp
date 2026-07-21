@@ -1,4 +1,4 @@
-"""NLFEM Lern-App - lokaler Server.
+"""Course Tutor Lern-App - lokaler Server.
 
 Startet einen kleinen HTTP-Server (nur Python-Standardbibliothek, keine
 Abhaengigkeiten) der die Weboberflaeche in webapp/ ausliefert und im
@@ -21,6 +21,7 @@ from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).parent
 WEBAPP_DIR = ROOT / "webapp"
+CONFIG_JSON = WEBAPP_DIR / "config.json"
 SESSION_FILE = ROOT / ".webapp_session.json"
 CHAT_HISTORY_FILE = ROOT / ".webapp_chat_history.json"
 AKTUELL_MD = ROOT / "aufgaben" / "aktuell.md"
@@ -390,12 +391,21 @@ class Handler(BaseHTTPRequestHandler):
 
     # ---------- Statische Dateien ----------
 
-    def _serve_file(self, relpath, content_type):
+    def _app_name(self):
+        try:
+            config = json.loads(CONFIG_JSON.read_text(encoding="utf-8"))
+            return config.get("app_name", "NLFEM")
+        except (FileNotFoundError, json.JSONDecodeError):
+            return "NLFEM"
+
+    def _serve_file(self, relpath, content_type, substitute_app_name=False):
         try:
             content = (WEBAPP_DIR / relpath).read_bytes()
         except FileNotFoundError:
             self.send_error(404)
             return
+        if substitute_app_name:
+            content = content.decode("utf-8").replace("NLFEM", self._app_name()).encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(content)))
@@ -408,20 +418,21 @@ class Handler(BaseHTTPRequestHandler):
         qs = parse_qs(parsed.query)
 
         routes = {
-            "/": ("index.html", "text/html; charset=utf-8"),
-            "/index.html": ("index.html", "text/html; charset=utf-8"),
-            "/style.css": ("style.css", "text/css; charset=utf-8"),
-            "/app.js": ("app.js", "application/javascript; charset=utf-8"),
-            "/icons.js": ("icons.js", "application/javascript; charset=utf-8"),
-            "/stats": ("stats.html", "text/html; charset=utf-8"),
-            "/stats.html": ("stats.html", "text/html; charset=utf-8"),
-            "/stats.js": ("stats.js", "application/javascript; charset=utf-8"),
-            "/archiv": ("archiv.html", "text/html; charset=utf-8"),
-            "/archiv.html": ("archiv.html", "text/html; charset=utf-8"),
-            "/archiv.js": ("archiv.js", "application/javascript; charset=utf-8"),
-            "/kompetenzbaum": ("kompetenzbaum.html", "text/html; charset=utf-8"),
-            "/kompetenzbaum.html": ("kompetenzbaum.html", "text/html; charset=utf-8"),
-            "/kompetenzbaum.js": ("kompetenzbaum.js", "application/javascript; charset=utf-8"),
+            "/": ("index.html", "text/html; charset=utf-8", True),
+            "/index.html": ("index.html", "text/html; charset=utf-8", True),
+            "/style.css": ("style.css", "text/css; charset=utf-8", False),
+            "/app.js": ("app.js", "application/javascript; charset=utf-8", False),
+            "/icons.js": ("icons.js", "application/javascript; charset=utf-8", False),
+            "/stats": ("stats.html", "text/html; charset=utf-8", True),
+            "/stats.html": ("stats.html", "text/html; charset=utf-8", True),
+            "/stats.js": ("stats.js", "application/javascript; charset=utf-8", False),
+            "/archiv": ("archiv.html", "text/html; charset=utf-8", True),
+            "/archiv.html": ("archiv.html", "text/html; charset=utf-8", True),
+            "/archiv.js": ("archiv.js", "application/javascript; charset=utf-8", False),
+            "/kompetenzbaum": ("kompetenzbaum.html", "text/html; charset=utf-8", True),
+            "/kompetenzbaum.html": ("kompetenzbaum.html", "text/html; charset=utf-8", True),
+            "/kompetenzbaum.js": ("kompetenzbaum.js", "application/javascript; charset=utf-8", False),
+            "/config.json": ("config.json", "application/json; charset=utf-8", False),
         }
         if path in routes:
             self._serve_file(*routes[path])
@@ -746,7 +757,11 @@ class Handler(BaseHTTPRequestHandler):
 def main():
     server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
     url = f"http://127.0.0.1:{PORT}"
-    print(f"NLFEM Lern-App laeuft: {url}  (Strg+C zum Beenden)")
+    try:
+        app_name = json.loads(CONFIG_JSON.read_text(encoding="utf-8")).get("app_name", "NLFEM")
+    except (FileNotFoundError, json.JSONDecodeError):
+        app_name = "NLFEM"
+    print(f"{app_name} laeuft: {url}  (Strg+C zum Beenden)")
     try:
         webbrowser.open(url)
     except Exception:
