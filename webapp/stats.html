@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NLFEM — Statistik</title>
+<link rel="stylesheet" href="/style.css">
+<script src="/icons.js"></script>
+</head>
+<body>
+
+<div id="app">
+  <header id="topbar">
+    <a href="/" class="brand" style="text-decoration:none;">
+      <span class="brand-dot"></span> NLFEM
+    </a>
+    <div style="flex:1"></div>
+    <a href="/kompetenzbaum" class="topbar-link" data-icon="skill-tree">Baum</a>
+    <a href="/archiv" class="topbar-link" data-icon="archive">Archiv</a>
+    <a href="/" id="back-link">← Zurück zum Lernen</a>
+  </header>
+
+  <main id="stats-layout">
+
+    <section class="stats-section">
+      <h2>Season 1</h2>
+      <div id="season-overview"><p class="muted">Lade …</p></div>
+    </section>
+
+    <section class="stats-section">
+      <h2>Tempo</h2>
+      <div id="pace-info"></div>
+    </section>
+
+    <section class="stats-section">
+      <h2>XP der letzten 14 Tage</h2>
+      <div id="xp-chart" class="xp-chart"></div>
+    </section>
+
+    <section class="stats-section">
+      <h2>Abzeichen</h2>
+      <div id="badge-grid" class="badge-grid"></div>
+    </section>
+
+    <section class="stats-section">
+      <h2>Lern-Streak</h2>
+      <div id="heatmap"></div>
+    </section>
+
+    <section class="stats-section">
+      <h2>Wochenrückblick</h2>
+      <div id="week-compare"></div>
+      <div id="week-chart" class="xp-chart" style="margin-top:10px;"></div>
+    </section>
+
+    <section class="stats-section">
+      <h2>Trefferquote</h2>
+      <p class="muted" style="margin:0 0 10px;">
+        Schaffst du Aufgaben ohne Hilfe? Zählt <strong>komplett unabhängig</strong> von
+        deiner Sicherheitseinschätzung unten — nur nach Hinweisen: 0 Hinweise = richtig,
+        1–2 = teilweise, 3+ (oder gar nicht) = falsch. Steuert die Aufgaben-Schwierigkeit
+        (Ziel 70–80%).
+      </p>
+      <div id="trefferquote-chart"></div>
+    </section>
+
+    <section class="stats-section">
+      <h2>Kalibrierung — Sicherheit vs. Trefferquote</h2>
+      <p class="muted" style="margin:0 0 10px;">
+        Anderes Thema als oben: weißt du, was du nicht weißt? Bei guter Kalibrierung
+        steigt die Trefferquote mit der vorhergesagten Sicherheit an.
+      </p>
+      <div id="calibration-chart"></div>
+    </section>
+
+    <section class="stats-section">
+      <h2>Konzepte je Übung</h2>
+      <div id="concept-grid"></div>
+    </section>
+
+    <section class="stats-section">
+      <h2>Sonstiges</h2>
+      <div id="misc-stats"></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="/stats.js"></script>
+</body>
+</html>

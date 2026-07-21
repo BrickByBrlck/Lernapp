@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NLFEM — Archiv</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<link rel="stylesheet" href="/style.css">
+<script src="/icons.js"></script>
+</head>
+<body>
+
+<div id="app">
+  <header id="topbar">
+    <a href="/" class="brand" style="text-decoration:none;">
+      <span class="brand-dot"></span> NLFEM
+    </a>
+    <div style="flex:1"></div>
+    <a href="/kompetenzbaum" class="topbar-link" data-icon="skill-tree">Baum</a>
+    <a href="/stats" class="topbar-link" data-icon="bar-chart">Statistik</a>
+    <a href="/" id="back-link">← Zurück zum Lernen</a>
+  </header>
+
+  <main class="split-layout">
+    <section class="pane-narrow">
+      <div class="pane-header">Abgeschlossene Aufgaben</div>
+      <div class="search-wrap" data-icon="search">
+        <input type="text" id="archiv-search" class="archiv-search" placeholder="Suchen …">
+      </div>
+      <div id="archiv-list"><p class="muted">Lade …</p></div>
+    </section>
+
+    <section class="pane-wide">
+      <div id="archiv-content" class="card">
+        <p class="muted">Wähle links eine Aufgabe aus.</p>
+      </div>
+
+      <div id="archiv-qa"></div>
+
+      <form id="archiv-qa-form" style="display:none;">
+        <textarea id="archiv-qa-input" placeholder="Kurze Rückfrage zu dieser Aufgabe … (unabhängig vom Haupt-Chat, stellt keine neue Aufgabe)" rows="2"></textarea>
+        <button id="archiv-qa-send" type="submit" data-icon="lightbulb">Fragen</button>
+      </form>
+    </section>
+  </main>
+</div>
+
+<script src="/archiv.js"></script>
+</body>
+</html>

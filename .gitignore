@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.webapp_session.json
+.webapp_chat_history.json
+.webapp_archiv_session.json

@@ -1,0 +1,98 @@
+{
+  "_hinweis": "DEMO/TESTDATEN -- bewusst ein anderes Fach (Statistik) mit anderen Uebungs-Labels (Woche1-3 statt U1-U5) und ohne Tensor-Notation, um den Wochen-Sortier-Bug und die Makro-Config zu verifizieren. Fuer echten Einsatz per Wizard ersetzen.",
+  "season": {
+    "name": "Testkurs - Statistik-Grundlagen",
+    "ziel": "Woche1-3 gemeistert",
+    "start": "2026-07-21",
+    "deadline": "2026-09-01",
+    "lerntage_pro_woche": 5,
+    "pause": null
+  },
+  "skala": {
+    "0": "nicht angefangen",
+    "1": "wackelig - schonmal gesehen, noch nicht selbst geloest",
+    "2": "sitzt - selbststaendig geloest",
+    "3": "sicher - geloest und kann es erklaeren"
+  },
+  "streak": {
+    "aktuell": 0,
+    "bester": 0,
+    "letzter_lerntag": null
+  },
+  "log": [],
+  "konzepte": [
+    {
+      "id": "grundlage_summenzeichen",
+      "ue": "Grundlagen",
+      "typ": "grundlage",
+      "name": "Summenzeichen-Notation",
+      "xp": 2,
+      "grad": 2,
+      "naechste_wiederholung": "2026-07-24",
+      "wdh_stufe": 0,
+      "ausgeloest_durch": "w1_mittelwert",
+      "entdeckt_am": "2026-07-21"
+    },
+    {
+      "id": "w1_mittelwert",
+      "ue": "Woche1",
+      "name": "Arithmetisches Mittel berechnen",
+      "xp": 1,
+      "grad": 2,
+      "naechste_wiederholung": "2026-07-24",
+      "wdh_stufe": 0,
+      "typ": "skript"
+    },
+    {
+      "id": "w1_varianz",
+      "ue": "Woche1",
+      "name": "Varianz und Standardabweichung",
+      "xp": 2,
+      "grad": 1,
+      "naechste_wiederholung": null,
+      "wdh_stufe": 0,
+      "typ": "skript",
+      "abhaengig_von": ["w1_mittelwert"]
+    },
+    {
+      "id": "w2_normalverteilung",
+      "ue": "Woche2",
+      "name": "Normalverteilung: Dichte und Verteilungsfunktion",
+      "xp": 3,
+      "grad": 0,
+      "naechste_wiederholung": null,
+      "wdh_stufe": 0,
+      "typ": "skript",
+      "teilaufgaben": [
+        {"id": "a", "beschreibung": "Dichtefunktion aufstellen", "anteil": 0.4, "erledigt": true},
+        {"id": "b", "beschreibung": "Verteilungsfunktion als Integral verstehen", "anteil": 0.3, "erledigt": false},
+        {"id": "c", "beschreibung": "Standardnormalverteilung per Tabelle nutzen", "anteil": 0.3, "erledigt": false}
+      ],
+      "abhaengig_von": ["w1_varianz"]
+    },
+    {
+      "id": "w2_zentraler_grenzwertsatz",
+      "ue": "Woche2",
+      "name": "Zentraler Grenzwertsatz (Intuition)",
+      "xp": 2,
+      "grad": 0,
+      "naechste_wiederholung": null,
+      "wdh_stufe": 0,
+      "typ": "skript",
+      "abhaengig_von": ["w2_normalverteilung"]
+    },
+    {
+      "id": "w3_hypothesentest",
+      "ue": "Woche3",
+      "name": "Hypothesentest: Nullhypothese, p-Wert",
+      "xp": 3,
+      "grad": 0,
+      "naechste_wiederholung": null,
+      "wdh_stufe": 0,
+      "typ": "skript",
+      "abhaengig_von": ["w2_normalverteilung"]
+    }
+  ],
+  "wdh_intervalle_tage": [3, 7, 14, 30],
+  "kalibrierung": []
+}

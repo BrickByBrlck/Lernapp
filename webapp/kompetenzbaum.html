@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NLFEM — Kompetenzbaum</title>
+<link rel="stylesheet" href="/style.css">
+<script src="/icons.js"></script>
+</head>
+<body>
+
+<div id="app">
+  <header id="topbar">
+    <a href="/" class="brand" style="text-decoration:none;">
+      <span class="brand-dot"></span> NLFEM
+    </a>
+    <div style="flex:1"></div>
+    <a href="/archiv" class="topbar-link" data-icon="archive">Archiv</a>
+    <a href="/stats" class="topbar-link" data-icon="bar-chart">Statistik</a>
+    <a href="/" id="back-link">← Zurück zum Lernen</a>
+  </header>
+
+  <main id="tree-page">
+    <div class="tree-intro">
+      <div class="pane-header">Kompetenzbaum</div>
+      <p class="muted">
+        Zeigt, welches Konzept auf welchem aufbaut — F/C/E aus U1 stecken in fast
+        jeder späteren Übung. Gesperrte Konzepte (grau, <span data-icon="lock" style="vertical-align:-0.2em"></span>)
+        brauchen erst ihre Voraussetzungen auf Grad ≥ 2.
+      </p>
+    </div>
+    <div id="tree-scroll">
+      <svg id="tree-svg"></svg>
+      <div id="tree-rows"></div>
+    </div>
+  </main>
+</div>
+
+<div id="detail-overlay"></div>
+<aside id="detail-panel">
+  <button id="detail-close" type="button" title="Schließen">✕</button>
+  <div id="detail-content"></div>
+</aside>
+
+<script src="/kompetenzbaum.js"></script>
+</body>
+</html>

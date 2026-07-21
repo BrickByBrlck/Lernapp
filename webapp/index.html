@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NLFEM — Lern-App</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<link rel="stylesheet" href="/style.css">
+<script src="/icons.js"></script>
+</head>
+<body>
+
+<div id="toast-stack"></div>
+
+<div id="app">
+
+  <!-- ===== Kopfzeile: Season + Tagesziel ===== -->
+  <header id="topbar">
+    <div class="brand">
+      <span class="brand-dot"></span> NLFEM
+    </div>
+    <div id="progress-strip">
+      <div class="meter meter-clickable" id="meter-heute" title="Klick: woraus sich die heutigen XP zusammensetzen">
+        <div class="meter-label">Heute</div>
+        <div class="meter-track"><div class="meter-fill" style="width:0%"></div></div>
+        <div class="meter-value">–</div>
+      </div>
+      <div class="meter meter-clickable" id="meter-season" title="Klick: woraus sich die Season-XP zusammensetzen">
+        <div class="meter-label">Season 1</div>
+        <div class="meter-track"><div class="meter-fill" style="width:0%"></div></div>
+        <div class="meter-value">–</div>
+      </div>
+      <div class="meter meter-clickable" id="meter-grundlagen" title="Voraussetzungen außerhalb des Skripts (z.B. Indexnotation) — Klick für Details">
+        <div class="meter-label" data-icon="layers">Grundl.</div>
+        <div class="meter-track"><div class="meter-fill" style="width:0%"></div></div>
+        <div class="meter-value">–</div>
+      </div>
+      <div id="streak-badge" title="Lern-Streak">–</div>
+      <div id="session-timer" title="Sitzungsdauer — rein informativ, zählt nicht zur XP">0:00</div>
+      <button id="session-timer-pause" type="button" title="Timer pausieren/fortsetzen"></button>
+    </div>
+    <button id="new-session-btn" class="topbar-link" type="button" data-icon="refresh" title="Startet Claudes interne Sitzung neu, falls Antworten spürbar langsamer werden (die wächst mit jeder Nachricht und wird dann bei jedem Aufruf komplett neu verarbeitet). Dein Chat-Verlauf hier bleibt erhalten.">Neue Sitzung</button>
+    <a href="/kompetenzbaum" class="topbar-link" data-icon="skill-tree" title="Abhängigkeiten zwischen Konzepten">Baum</a>
+    <a href="/archiv" class="topbar-link" data-icon="archive" title="Abgeschlossene Aufgaben durchsuchen">Archiv</a>
+    <a href="/stats" class="topbar-link" data-icon="bar-chart" title="Alle Statistiken im Detail">Statistik</a>
+  </header>
+
+  <main id="layout">
+
+    <!-- ===== Linke Spalte: Aufgabe + Übungs-Übersicht ===== -->
+    <section id="task-pane">
+      <div class="pane-header">Aktuelle Aufgabe</div>
+      <div id="task-content" class="card">
+        <p class="muted">Lade …</p>
+      </div>
+
+      <div class="pane-header">Übungen</div>
+      <div id="uebungen-list"></div>
+
+      <div class="pane-header">Fällige Wiederholung</div>
+      <div id="wiederholung-list"><p class="muted">–</p></div>
+    </section>
+
+    <div id="resizer" title="Ziehen, um die Spaltenbreite zu ändern"></div>
+
+    <!-- ===== Rechte Spalte: Chat ===== -->
+    <section id="chat-pane">
+      <div id="messages"></div>
+
+      <div id="quick-actions">
+        <button data-cmd="/heute" data-icon="calendar">Heute</button>
+        <button data-cmd="/lernen" data-icon="arrow-right">Nächste Aufgabe</button>
+        <button data-cmd="/leiter" data-icon="ladder">Zu schwer</button>
+        <button data-cmd="/erklaer" data-icon="lightbulb">Erklär mir das</button>
+        <button data-cmd="/stand" data-icon="check-circle">Fertig für heute</button>
+      </div>
+
+      <form id="input-row">
+        <textarea id="input" placeholder="Deine Antwort … (Enter zum Senden, Shift+Enter für Zeilenumbruch)" rows="2"></textarea>
+        <button id="send-btn" type="submit">Senden</button>
+      </form>
+    </section>
+
+  </main>
+</div>
+
+<div id="detail-overlay"></div>
+<aside id="detail-panel">
+  <button id="detail-close" type="button" title="Schließen">✕</button>
+  <div id="detail-content"></div>
+</aside>
+
+<script src="/app.js"></script>
+</body>
+</html>
