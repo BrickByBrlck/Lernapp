@@ -19,6 +19,31 @@ Engine selbst und werden hier nicht mehr gebraucht.
 
 ## Ablauf
 
+**0. Material-Import (optional, zuerst fragen).** Frag, ob der Nutzer einen
+Ordner mit Vorlesungsfolien/Skripten als PDF hat. Falls ja:
+
+```
+python material_import.py <ordner-mit-pdfs>
+```
+
+Das extrahiert Text nach `material/text/` (Ordnerstruktur bleibt erhalten).
+Fehlt `pypdf`, sagt das Skript das explizit — dann `pip install pypdf`
+vorschlagen, nicht selbst versuchen zu umgehen. PDFs ohne erkannten Text
+(gescannte Folien ohne OCR) meldet das Skript einzeln als Fehler; das ist
+kein Abbruchgrund für den restlichen Import.
+
+Nach dem Import: **nicht** alle extrahierten Dateien komplett lesen (Token-
+Disziplin) — mit Glob einen Überblick verschaffen (Dateinamen/Ordnerstruktur
+verraten oft schon die Gliederung, z.B. `Woche3/folie02.txt`), dann gezielt
+in 2-4 Dateien reinlesen (Anfang, Inhaltsverzeichnis-Folie falls vorhanden,
+eine Folie aus der Mitte), um Fachbegriffe und groben Aufbau zu erfassen.
+Das Ergebnis fließt in Frage 9 als **Vorschlag** ein, den der Nutzer nur noch
+bestätigt oder korrigiert, statt die Gliederung komplett selbst aufzuschreiben.
+
+Hat der Nutzer kein PDF-Material (z.B. Sprachkurs ohne Folien, oder Material
+liegt schon als Text vor): diesen Schritt überspringen, direkt mit Frage 1
+weiter.
+
 **1. Interview.** Stelle diese Fragen **nacheinander**, nicht alle auf einmal
 (kurze Rückfragen, keine Formularflut). Vernünftige Defaults vorschlagen, wo
 möglich, aber auf echte Antwort warten:
@@ -56,10 +81,14 @@ möglich, aber auf echte Antwort warten:
 8. Favicon-Emoji für die Weboberfläche, ein einzelnes Zeichen (→ `favicon` in
    `webapp/config.json`, Default 🎓 wenn keine Präferenz)
 9. Grober Kursaufbau: welche Blöcke/Kapitel gibt es, in welcher Reihenfolge,
-   und was sind pro Block die wichtigsten 2-6 Konzepte? Frag nach einer
-   groben Liste, keine Roman-Antwort nötig — Feinschliff passiert später
-   sowieso laufend beim Lernen selbst (→ Grundlage für `konzepte` in
-   `fortschritt.json` und für `curriculum.md`)
+   und was sind pro Block die wichtigsten 2-6 Konzepte? **Wurde in Schritt 0
+   Material importiert:** einen Gliederungsvorschlag aus den gesichteten
+   Dateien machen ("Sieht nach diesen Blöcken aus: ... — passt das, oder
+   soll ich was ändern?") statt bei null anzufangen. Der Nutzer bestätigt
+   oder korrigiert, tippt nicht alles selbst. **Ohne Material:** normal nach
+   einer groben Liste fragen, keine Roman-Antwort nötig — Feinschliff
+   passiert später sowieso laufend beim Lernen selbst (→ Grundlage für
+   `konzepte` in `fortschritt.json` und für `curriculum.md`)
 10. Deadline/Klausurtermin (falls vorhanden) und wie viele Tage pro Woche
     realistisch gelernt wird, plus eventuelle Lernpausen (Urlaub o.ä.) (→
     `season.deadline`, `season.lerntage_pro_woche`, `season.pause`)
