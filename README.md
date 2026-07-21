@@ -56,9 +56,9 @@ Ergebnis — sichtbar auf `/stats`, aber ohne Einfluss auf die Schwierigkeitsste
 ## Quickstart
 
 ```
-pip install anthropic  # oder: Claude Code CLI separat installiert & eingeloggt
-claude                 # im Repo-Verzeichnis, dann:
-/setup-tutor            # interviewt dich zu Fach, Kontext und Kursgliederung
+pip install pypdf       # nur fuer den PDF-Import, siehe unten -- optional
+claude                  # im Repo-Verzeichnis, dann:
+/setup-tutor             # interviewt dich zu Fach, Kontext und Kursgliederung
 python app.py
 ```
 
@@ -69,6 +69,19 @@ Fach aus — die Engine-Regeln in `CLAUDE.md` bleiben dabei unangetastet.
 `fortschritt.json` in diesem Repo ist bis dahin ein **Demo-Datensatz**
 (Statistik-Grundkurs), der bewusst absichtlich generisch gehalten ist, um Bugs wie
 hartkodierte Übungslabels aufzudecken — nicht mit echten Kursdaten verwechseln.
+
+Hast du Vorlesungsfolien als PDF, extrahiert `material_import.py` deren Text
+nach `material/text/`, bevor `/setup-tutor` läuft — dann schlägt der Wizard
+die Kursgliederung aus dem Material vor, statt dass du sie von Hand eintippst:
+
+```
+pip install pypdf
+python material_import.py "C:\Pfad\zu\den\Folien"
+```
+
+Voraussetzung für `/setup-tutor` bzw. den Chat-Tutor selbst: ein Claude-Zugang,
+der Claude Code freischaltet (Pro-Abo oder höher, kein API-Key nötig) — die App
+läuft komplett lokal mit deiner eigenen Anmeldung, kein separates Konto bei uns.
 
 ## Lizenz
 
